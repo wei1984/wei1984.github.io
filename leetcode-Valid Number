@@ -1,0 +1,59 @@
+/**
+*Validate if a given string is numeric.
+
+*Some examples:
+*"0" => true
+*" 0.1 " => true
+*"abc" => false
+*"1 a" => false
+*"2e10" => true
+*/
+public class Solution {
+    public boolean isNumber(String s) {
+        if(s == null || s.length() == 0) return false;
+        s = s.trim();
+        if(s.indexOf("e") != s.lastIndexOf("e")) return false;
+        if(s.indexOf("e") >= 0 ){
+            String[] str = s.split("e");
+            if(str.length != 2) return false;
+            return isFloat(str[0]) && isInteger(str[1]);
+        }else{
+            return isFloat(s);
+        }
+    }
+    
+    private boolean isFloat(String s){
+        if(s.length() == 0 || s.indexOf(".") != s.lastIndexOf(".")) return false;
+        
+        if(s.indexOf(".") >= 0){
+            String[] str = s.split("\\.");
+            if(str.length == 0 || str.length > 2) return false;
+            if(str.length == 1) return isInteger(str[0]);
+            return (str[0].length() == signNum(str[0]) || isInteger(str[0])) && isDigit(str[1]);
+        }else{
+            return isInteger(s);
+        }
+    }
+    
+    private boolean isInteger(String s){
+        if(s.length() == 0) return false;
+        int j = signNum(s);
+      
+        return isDigit(s.substring(j));
+    }
+    
+    private int signNum(String s){
+        if(s.length() > 0 && (s.charAt(0) == '-' || s.charAt(0) == '+')) return 1;
+        return 0;
+    }
+    
+    private boolean isDigit(String s){
+        if(s.length() == 0) return false;
+        for(int i = 0;i < s.length();i++){
+            char c = s.charAt(i);
+            
+            if(c < '0' || c > '9') return false;
+        }
+        return true;
+    }
+}
