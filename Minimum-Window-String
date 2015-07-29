@@ -1,0 +1,67 @@
+
+/**
+* Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+* For example,
+* S = "ADOBECODEBANC"
+* T = "ABC"
+* Minimum window is "BANC".
+*
+* Note:
+* If there is no such window in S that covers all characters in T, return the emtpy string "".
+*
+* If there are multiple such windows, you are guaranteed that there will always be only one unique minimum window in S.
+*
+*/
+public class Solution{
+
+  public String minWindow(String s, String t) {
+       if(s.length() < t.length()){
+         return "";
+      }
+      
+      Map<Character,Integer> tMap = new HashMap<Character,Integer>();
+      for(int i = 0;i < t.length();i++){
+          char c = t.charAt(i);
+          int count = tMap.containsKey(c) ? tMap.get(c) + 1: 1;
+          tMap.put(c,count);
+      }
+    
+      Map<Character,Integer> found = new HashMap<Character,Integer>();
+      int start = 0;
+      int end = 0;
+      int co = 0;
+      int min = Integer.MAX_VALUE;
+      String result = "";
+      
+      while(end < s.length()){
+          char c = s.charAt(end);
+          if(tMap.containsKey(c)){
+              if(found.containsKey(c)){
+                  if(found.get(c) < tMap.get(c)){
+                      co++;
+                  }
+                  found.put(c,found.get(c) + 1);
+              }else{
+                  found.put(c,1);
+                  co++;
+              }
+          }
+          if(co == t.length()){
+            char st = s.charAt(start);
+            while(!tMap.containsKey(st) || tMap.get(st) < found.get(st)){
+                if(tMap.containsKey(st) && tMap.get(st) < found.get(st)){
+                    found.put(st,found.get(st) - 1);
+                }
+                start++;
+                st = s.charAt(start);
+            }
+            if(end - start + 1 < min){
+                result = s.substring(start,end + 1);
+                min = end - start + 1;
+            }
+          }
+          end++;
+       }
+       return result;
+  }
+}
