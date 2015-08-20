@@ -1,0 +1,66 @@
+/**
+     * @param expression: A string array
+     * @return: The root of expression tree
+     */
+    public ExpressionTreeNode build(String[] expression) {
+        // write your code here
+        Stack<ExpressionTreeNode> ns = new Stack<ExpressionTreeNode>();
+        Stack<String> stack = new Stack<String>();
+        int i = 0;
+        while(i < expression.length){
+            if(isDigit(expression[i])){
+                ns.push(new ExpressionTreeNode(expression[i]));
+            }else if(")".equals(expression[i])){
+                while(!"(".equals(stack.peek())){
+                    createTreeNode(stack,ns);
+                }
+                stack.pop();
+            }else if("(".equals(expression[i]) || stack.empty() 
+                || compare(expression[i],stack.peek())){
+                stack.push(expression[i]);
+            }else {
+                while(!stack.empty() && !compare(expression[i],stack.peek())){
+                    createTreeNode(stack,ns);
+                }
+                stack.push(expression[i]);
+            }
+            i++;
+        }
+        
+        while(!stack.empty()){
+            createTreeNode(stack,ns);
+        }
+        return ns.empty() ? null : ns.pop();
+    }
+    
+    private void createTreeNode(Stack<String> stack,Stack<ExpressionTreeNode> ns){
+        ExpressionTreeNode node = new ExpressionTreeNode(stack.pop());
+        node.right = ns.pop();
+        node.left = ns.pop();
+        ns.push(node);
+    }
+    
+    private boolean isDigit(String str){
+        for(int i = 0;i < str.length();i++){
+            char c = str.charAt(i);
+            if(c < '0' || c > '9'){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private boolean compare(String s1,String s2){
+        int i1 = priority(s1);
+        int i2 = priority(s2);
+        return i1 > i2;
+    }
+    
+    private int priority(String str){
+        if("+".equals(str) || "-".equals(str)){
+            return 10;
+        }else if("*".equals(str) || "/".equals(str)){
+            return 11;
+        }
+        return 0;
+    }
