@@ -1,0 +1,26 @@
+  public int jump(int[] A) {
+        // write your code here
+        if(A == null || A.length == 0) return 0;
+        
+        if(A[0] >= A.length - 1) return 1;
+        int res = jump(A,0,A[0]);
+        return res == 0 ? 0 : 1 + res;
+    }
+    
+    private int jump(int[] A,int begin,int end){
+        int max = end;
+        
+        for(int i = begin;i <= end;i++){
+            max = Math.max(i + A[i],max);
+        }
+        
+        if(max >= A.length - 1){
+            return 1;
+        }else if(max == end){
+            return 0;
+        }else{
+            int res = jump(A,end,max);
+            return res == 0 ? 0 : 1 + res;
+        }
+    }
+}
