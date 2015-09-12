@@ -1,0 +1,52 @@
+/**
+ * @param matrix: a matrix of integers
+ * @return: an array of integers
+ */ 
+public int[] printZMatrix(int[][] matrix) {
+    // write your code here
+    //@Algorithm 
+    //1.make a right move,if cannot move right then move down
+    //2.make a bottom left move,
+    //3.move down,if cannot move down,then move right
+    //4.move top right
+    if(matrix == null || matrix[0].length == 0) return null;
+    int m = matrix.length;
+    int n = matrix[0].length;
+    int[] res = new int[m * n];
+    
+    int index = 0;
+    int i = 0;
+    int j = 0;
+    res[index++] = matrix[0][0];
+    while(i < m - 1 || j < n - 1){
+        //move right
+        if(j < n - 1){
+            res[index++] = matrix[i][++j];
+        }else{
+            res[index++] = matrix[++i][j];
+        }
+        
+        if(i == m - 1 && j == n - 1){
+            break;
+        }
+        
+        //move to left bottom
+        while(i < m - 1 && j  > 0){
+            res[index++] = matrix[++i][--j];
+        }
+        
+        //move down
+        if(i < m - 1){
+            res[index++] = matrix[++i][j];
+        }else{
+            res[index++] = matrix[i][++j];
+        }
+        
+        //move to top right
+        while(i > 0 && j < n - 1){
+            res[index++] = matrix[--i][++j];
+        }
+    }
+    
+    return res;
+}
