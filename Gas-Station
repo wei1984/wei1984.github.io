@@ -1,0 +1,17 @@
+public int canCompleteCircuit(int[] gas, int[] cost) {
+    // write your code here
+    int res = 0;
+    int total = 0;
+    int minus = 0;
+    for(int i = 0;i < gas.length;i++){
+        total = total + gas[i] - cost[i];
+        if(total < 0){
+            minus += total;
+            total = 0;
+            res = i + 1;
+        }
+    }
+    
+    if(res == gas.length || total + minus < 0) return -1;
+    return res;
+}
