@@ -1,0 +1,14 @@
+    public long houseRobber(int[] A) {
+        // write your code here
+        if(A == null || A.length == 0) return 0;
+        
+        long pre = 0;
+        long cur = A[0];
+        
+        for(int i = 1;i < A.length;i++){
+            long tmp = Math.max(pre + A[i],cur);
+            pre = cur;
+            cur = tmp;
+        }
+        return cur;
+    }
