@@ -1,0 +1,36 @@
+ public int maxPoints(Point[] points) {
+        // Write your code w
+        if(points == null || points.length == 0) return 0;
+        if(points.length == 1) return 1;
+        
+        Map<Double,Integer> map = new HashMap<Double,Integer>();
+        int res = 0;
+        for(int i = 0;i < points.length - 1;i++){
+            int align = 0;
+            int duplicates = 1;
+            for(int j = i + 1;j < points.length;j++){
+                if(points[i].x == points[j].x){ 
+                     if(points[i].y == points[j].y)
+                        duplicates++;
+                     else
+                        align++;
+                 }
+            }
+            for(int j = i + 1;j < points.length;j++){
+                if(points[i].x != points[j].x){ 
+                    double x = points[i].x - points[j].x;
+                    double y = points[i].y - points[j].y;
+                    double tmp = y/x;
+                    int v = 1;
+                    if(map.containsKey(tmp)){
+                        v += map.get(tmp);
+                    }
+                    map.put(tmp,v);
+                    res = Math.max(res,duplicates + v);
+                }
+            }
+            res = Math.max(res,align + duplicates);
+            map.clear();
+        }
+        return res;
+    }
