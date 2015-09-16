@@ -1,0 +1,31 @@
+public ArrayList<Integer> continuousSubarraySum(int[] A) {
+    // Write your code here
+    ArrayList<Integer> res = new ArrayList<Integer>();
+    if(A == null || A.length == 0) return res;
+    
+    int max = A[0];
+    int begin = 0;
+    int end = 0;
+    int local = A[0];
+    int lb = 0;
+    int le = 0;
+    
+    for(int i = 1;i < A.length;i++){
+        if(local < 0){
+            lb = i;
+            local = A[i];
+        }else{
+            local += A[i];
+        }
+        le = i;
+        if(max < local){
+            begin = lb;
+            end = le;
+            max = local;
+        }
+    }
+    
+    res.add(begin);
+    res.add(end);
+    return res;
+}
