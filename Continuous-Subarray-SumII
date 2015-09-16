@@ -1,0 +1,47 @@
+public ArrayList<Integer> continuousSubarraySumII(int[] A) {
+    // Write your code here
+    ArrayList<Integer> res = new ArrayList<Integer>();
+    if(A == null || A.length == 0) return res;
+    
+    int total = 0;
+    int max = A[0];
+    int begin = 0;
+    int end = 0;
+    int local = 0;
+    int lb = 0;
+    for(int i = 0;i < A.length;i++){
+        total += A[i];
+        if(local < 0){
+            local = A[i];
+            lb = i;
+        }else{
+            local += A[i];
+        }
+        if(max < local){
+            max = local;
+            begin = lb;
+            end = i;
+        }
+    }
+    
+    local = 0;
+    lb = 0;
+    for(int i = 0;i < A.length;i++){
+        if(local > 0){
+            lb = i;
+            local = A[i];
+        }else{
+            local += A[i];
+        }
+        if(lb == 0 && i == A.length - 1) continue;
+        if(total - local > max){
+            max = total - local;
+            begin = (i + 1)%A.length;
+            end = (lb - 1 + A.length)%A.length;
+        }
+    }
+    
+    res.add(begin);
+    res.add(end);
+    return res;
+}
