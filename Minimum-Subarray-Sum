@@ -1,0 +1,25 @@
+public int minimumSize(int[] nums, int s) {
+      // write your code here
+      if(nums == null || nums.length == 0) return -1;
+      
+      int first = 0;
+      int second = 0;
+      int sum = nums[0];
+      int min_len = Integer.MAX_VALUE;
+      while(second < nums.length){
+          if(sum >= s){
+              if(first == second){
+                 return 1;
+              }else{
+                  min_len = Math.min(second - first + 1,min_len);
+                  sum -= nums[first++];
+              }
+          }else{
+              if(second < nums.length - 1){
+                  sum += nums[second + 1];
+              }
+              second++;
+          }
+      }
+      return min_len == Integer.MAX_VALUE ? -1 : min_len;
+  }
