@@ -1,0 +1,17 @@
+  public int maxSubArray(ArrayList<Integer> nums, int k) {
+      // write your code
+      int[][] res = new int[k + 1][nums.size() + 1];
+      
+      for(int i = 1;i <= k;i++){
+          int local = Integer.MIN_VALUE;
+          for(int j = i - 1;j < nums.size();j++){
+              local = Math.max(local,res[i - 1][j]) + nums.get(j);
+              if(j == i - 1){
+                  res[i][j + 1] = local;
+              }else{
+                  res[i][j + 1] = Math.max(local,res[i][j]);
+              }
+          }
+      }
+      return res[k][nums.size()];
+  }
