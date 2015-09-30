@@ -1,0 +1,11 @@
+   观察规律得出，如果n是3的倍数，后手必赢
+   如果n不是3的倍数，先手可以先取n％3个coin，然后剩下的数变成3的倍数，同时先手变后手，所以先手赢
+   
+    /**
+     * @param n: an integer
+     * @return: a boolean which equals to true if the first player will win
+     */
+    public boolean firstWillWin(int n) {
+        // write your code here
+        return n%3 != 0;
+    }
