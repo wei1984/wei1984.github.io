@@ -1,0 +1,27 @@
+  public boolean firstWillWin(int[] values) {
+        // write your code here
+        if(values.length < 2) return true;
+        int len = values.length;
+        int[] max = new int[len + 2];
+        max[len - 1] = values[len - 1];
+        max[len - 2] = values[len - 1] + values[len - 2];
+        boolean getTwo1 = true;
+        boolean getTwo2 = false;
+        
+        for(int i = len - 3;i >= 0;i--){
+            //two options 
+            int takeOne = values[i];
+            takeOne += getTwo1 ? max[i + 3] : max[i + 2];
+            
+            
+            int takeTwo = values[i] + values[i + 1];
+            takeTwo += getTwo2 ? max[i + 4] : max[i + 3];
+            
+            max[i] = Math.max(takeOne,takeTwo);
+            getTwo2 = getTwo1;
+            getTwo1 = takeTwo > takeOne ? true : false;
+        }
+        
+        if(getTwo1) return max[0] > max[2];
+        return max[0] > max[1];
+    }
