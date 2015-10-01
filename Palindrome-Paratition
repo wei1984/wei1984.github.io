@@ -1,0 +1,39 @@
+    /**
+     * @param s: A string
+     * @return: A list of lists of string
+     */
+    public List<List<String>> partition(String s) {
+        // write your code here
+        List<List<String>> res = new ArrayList<List<String>>();
+        List<String> tmp = new ArrayList<String>();
+        
+        dfs(0,s,tmp,res);
+        return res;
+    }
+    
+    private void dfs(int start,String s,List<String> tmp,List<List<String>> res){
+        if(start == s.length()){
+            res.add(new ArrayList<String>(tmp));
+            return;
+        }
+        
+        for(int i = start + 1;i <= s.length();i++){
+            String sub = s.substring(start,i);
+            if(isPalindrome(sub)){
+                tmp.add(sub);
+                dfs(i,s,tmp,res);
+                tmp.remove(tmp.size() - 1);
+            }
+        }
+    }
+    
+    private boolean isPalindrome(String s){
+        if(s.length() == 1) return true;
+        
+        for(int i = 0;i < s.length();i++){
+            if(s.charAt(i) != s.charAt(s.length() - i - 1)){
+                return false;
+            }
+        }
+        return true;
+    }
