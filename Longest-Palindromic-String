@@ -1,0 +1,60 @@
+Solution 1 : 
+    public String longestPalindrome(String s) {
+        if(s.length() < 2) return s;
+        // Write your code here
+        String longest = "";
+        for(int i = 0;i < s.length();i++){
+            for(int j = i + 1;j < s.length();j++){
+                if(j - i + 1 > longest.length() && isPalindrome(s,i,j)){
+                    longest = s.substring(i,j + 1);
+                }
+            }
+        }
+        return longest;
+    }
+    
+    private boolean isPalindrome(String s,int l,int r){
+        while(l < r){
+            char a = s.charAt(l);
+            char b = s.charAt(r);
+            if(a != b){
+                return false;
+            }else{
+                l++;
+                r--;
+            }
+        }
+        return true;
+    }
+    
+Solution 2:
+    /**
+     * @param s input string
+     * @return the longest palindromic substring
+     */
+    public String longestPalindrome(String s) {
+        if(s.length() < 2) return s;
+        // Write your code here
+        String longest = s.substring(0,1);
+        for(int i = 0;i < s.length() - 1;i++){
+            String tmp = getPalindrome(s,i,i);
+            longest = tmp.length() > longest.length() ? tmp : longest;
+            tmp = getPalindrome(s,i,i + 1);
+            longest = tmp.length() > longest.length() ? tmp : longest;
+        }
+        return longest;
+    }
+    
+    private String getPalindrome(String s,int l,int r){
+        while(l >= 0 && r < s.length()){
+            char a = s.charAt(l);
+            char b = s.charAt(r);
+            if(a != b){
+                return s.substring(l + 1,r);
+            }else{
+                l--;
+                r++;
+            }
+        }
+        return s.substring(l + 1,r);
+    }
