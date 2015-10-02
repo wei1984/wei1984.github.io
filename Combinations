@@ -1,0 +1,26 @@
+public List<List<Integer>> combine(int n, int k) {
+		// write your code here
+		List<List<Integer>> res = new ArrayList<List<Integer>>();
+		List<Integer> tmp = new ArrayList<Integer>();
+		dfs(1,k,n,tmp,res);
+		return res;
+}
+  
+  private void dfs(int start,int k,int n,List<Integer> tmp,List<List<Integer>> res){
+      if(tmp.size() == k){
+          List<Integer> list = new ArrayList<Integer>(tmp);
+          // Collections.sort(list);
+          // if(!res.contains(list)){
+              res.add(list);
+          // }
+          return;
+      }
+      
+      for(int i = start;i <= n;i++){
+          if(!tmp.contains(i)){
+              tmp.add(i);
+              dfs(i + 1,k,n,tmp,res);
+              tmp.remove(tmp.size() - 1);
+          }
+      }
+  }
