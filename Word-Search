@@ -1,0 +1,27 @@
+    public boolean exist(char[][] board, String word) {
+        // write your code here
+        boolean[][] visited = new boolean[board.length][board[0].length];
+        for(int i = 0;i < visited.length;i++){
+            Arrays.fill(visited[i],false);
+        }
+        for(int i = 0;i < board.length;i++){
+            for(int j = 0;j < board[0].length;j++){
+                boolean res = dfs(board,word,0,visited,i,j);
+                if(res) return true;
+            }
+        }
+        return false;
+    }
+    
+    private boolean dfs(char[][] board,String word,int start,boolean[][] visited,int i,int j){
+        if(start == word.length()) return true;
+        if(visited[i][j] || word.charAt(start) != board[i][j]) return false;
+        visited[i][j] = true;
+        boolean res = false;
+        if(i > 0) res = dfs(board,word,start + 1,visited,i - 1,j);
+        if(j > 0 && !res) res = dfs(board,word,start + 1,visited,i,j - 1);
+        if(i < board.length - 1 && !res) res = dfs(board,word,start + 1,visited,i + 1,j);
+        if(j < board[0].length - 1 && !res) res = dfs(board,word,start + 1,visited,i,j + 1);
+        visited[i][j] = false;
+        return res;
+    }
