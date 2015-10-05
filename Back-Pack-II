@@ -1,0 +1,19 @@
+public int backPackII(int m, int[] A, int V[]) {
+    // write your code here
+    boolean[] res = new boolean[m + 1];
+    int[] tmp = new int[m + 1];
+    Arrays.fill(res,false);
+    res[0] = true;
+    tmp[0] = 0;
+    int max = 0;
+    for(int i = 0;i < A.length;i++){
+        for(int j = m;j >= 0;j--){
+            if(j - A[i] >= 0 && res[j - A[i]]){
+                res[j] = true;
+                tmp[j] = Math.max(V[i] + tmp[j - A[i]],tmp[j]);
+                max = Math.max(max,tmp[j]);
+            }
+        }
+    }
+    return max;
+}
