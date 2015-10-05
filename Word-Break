@@ -1,0 +1,30 @@
+public boolean wordBreak(String s, Set<String> dict) {
+        // write your code here   
+        // return dfs(s,0,dict);
+        int[] count = new int[26];
+        //这句意思是统计所有在dict中的字符串里面包含的字符
+        for (String ss : dict) {
+            for (int i = 0; i < ss.length(); i++) {
+                count[ss.charAt(i) - 'a']++;
+            }
+        }
+        //就是如果s里面有dict里面没出现的字符直接判断false
+        for (int i = 0; i < s.length(); i++) {
+            if (count[s.charAt(i) - 'a'] == 0) {
+                return false;
+            }
+        }
+        int len = s.length();
+        int[] d = new int[len + 1];
+        d[0] = 1;
+        for(int i = 1;i <= len;i++){
+            for(int j = i - 1;j >= 0;j--){
+                String tmp = s.substring(j,i);
+                if(d[j] == 1 && dict.contains(tmp)){
+                    d[i] = 1;
+                    break;
+                }
+            }
+        }
+        return d[len] == 1;
+    }
