@@ -1,0 +1,16 @@
+public int backPack(int m, int[] A) {
+    // write your code here
+    boolean[] res = new boolean[m + 1];
+    Arrays.fill(res,false);
+    res[0] = true;
+    int max = 0;
+    for(int i = 0;i < A.length;i++){
+        for(int j = m;j >= 0;j--){
+            if(j - A[i] >= 0 && res[j - A[i]]){
+                res[j] = true;
+                max = Math.max(max,j);
+            }
+        }
+    }
+    return max;
+}
