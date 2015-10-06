@@ -1,0 +1,12 @@
+public int digitCounts(int k, int n) {
+    // write your code here
+    int res = 0;
+    char c = (char)('0' + k);
+    for(int i = 0;i <= n;i++){
+        String ss = String.valueOf(i);
+        for(char cc : ss.toCharArray()){
+            if(cc == c) res++;
+        }
+    }
+    return res;
+}
