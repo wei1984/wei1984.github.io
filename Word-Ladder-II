@@ -1,0 +1,79 @@
+ public List<List<String>> findLadders(String start, String end, Set<String> dict) {
+      // write your code here 
+      Set<String> hash = new HashSet<String>();
+      Queue<String> queue = new LinkedList<String>();
+      Map<String,List<String>> map = new HashMap<String,List<String>>();
+      
+      queue.offer(start);
+      hash.add(start);
+      
+      int level = bfs(map,queue,dict,end,hash);
+      
+      List<List<String>> res = new ArrayList<List<String>>();
+      List<String> tmp = new ArrayList<String>();
+      tmp.add(end);
+      dfs(map,tmp,level,end,start,res);
+      
+      return res;
+  }
+  
+  private void dfs(Map<String,List<String>> map,List<String> tmp,int level,String end,String start,List<List<String>> res){
+      if(end.equals(start) && level == 1){
+          res.add(new ArrayList<String>(tmp));
+      }else{
+          for(String str : map.get(end)){
+              tmp.add(0,str);
+              if(level > 1){
+                  dfs(map,tmp,level - 1,str,start,res);
+              }
+              tmp.remove(0);
+          }
+      }
+  }
+  
+  private int bfs(Map<String,List<String>> map,Queue<String> queue,Set<String> dict,String end,Set<String> hash){
+      boolean isEnd = false;
+      int level = 1;
+      while(!queue.isEmpty()){
+          level++;
+          int size = queue.size();
+          Set<String> levelSet = new HashSet<String>();
+          for(int i = 0;i < size;i++){
+              String string = queue.poll();
+              List<String> list = getNextWords(string,dict);
+              for(String s : list){
+                  if(hash.contains(s)) continue;
+                  queue.offer(s);
+                  levelSet.add(s);
+                  List<String> li = map.containsKey(s) ? map.get(s) : new ArrayList<String>();
+                  if(!li.contains(string)){
+                      li.add(string);
+                      map.put(s,li);
+                  }
+                  if(s.equals(end)){
+                      isEnd = true;
+                  }
+              }
+          }
+          hash.addAll(levelSet);
+          if(isEnd) break;
+      }
+      return level;
+  }
+  
+  private List<String> getNextWords(String str,Set<String> dict){
+      List<String> list = new ArrayList<String>();
+      char[] ch = str.toCharArray();
+      for(char c = 'a';c <= 'z';c++){
+          for(int i = 0;i < str.length();i++){
+              if(ch[i] == c) {
+                  continue;
+              }
+              ch[i] = c;
+              String s = new String(ch);
+              ch[i] = str.charAt(i);
+              if(dict.contains(s)) list.add(s);
+          }
+      }
+      return list;
+  }
