@@ -1,0 +1,39 @@
+public int ladderLength(String start, String end, Set<String> dict) {
+        // write your code here
+        Queue<String> queue = new LinkedList<String>();
+        Set<String> hashSet = new HashSet<String>();
+        queue.add(start);
+        hashSet.add(start);
+        int res = 1;
+        while(queue.size() > 0){
+            res++;
+            int size = queue.size();
+            for(int i = 0;i < size;i++){
+                String str = queue.poll();
+                List<String> list = bfs(str,dict);
+                for(String s : list){
+                    if(hashSet.contains(s)) continue;
+                    if(s.equals(end)) return res;
+                    queue.offer(s);
+                    hashSet.add(s);
+                }
+                
+            }
+        }
+        return 0;
+    }
+    
+    private List<String> bfs(String str,Set<String> dict){
+        List<String> list = new ArrayList<String>();
+        for(char c = 'a';c <= 'z';c++){
+            for(int j = 0;j < str.length();j++){
+                char[] ch = str.toCharArray();
+                if(ch[j] == c) continue;
+                ch[j] = c;
+                String s = new String(ch);
+                if(!dict.contains(s)) continue;
+                list.add(s);
+            }
+        }
+        return list;
+    }
