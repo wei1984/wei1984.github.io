@@ -1,0 +1,35 @@
+public ArrayList<Integer> previousPermuation(ArrayList<Integer> nums) {
+    // write your code
+    //first find the descend number from back 
+    if(nums.size() < 2) return nums;
+    boolean flag = false;
+    for(int i = nums.size() - 2;i >= 0;i--){
+        int val = nums.get(i);
+        int pre = nums.get(i + 1);
+        if(val > pre){
+            for(int j = i + 1;j < nums.size();j++){
+                if(j == nums.size() - 1 || nums.get(j + 1) >= val){
+                    nums.set(i,nums.get(j));
+                    nums.set(j,val);
+                    reverse(nums,i + 1);
+                    break;
+                }
+            }
+            flag = true;
+            break;
+        }
+    }
+    if(!flag) reverse(nums,0);
+    return nums;
+}
+
+private void reverse(ArrayList<Integer> nums,int start){
+    int end = nums.size() - 1;
+    while(start < end){
+        int tmp = nums.get(start);
+        nums.set(start,nums.get(end));
+        nums.set(end,tmp);
+        start++;
+        end--;
+    }
+}
