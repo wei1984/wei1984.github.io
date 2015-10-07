@@ -1,0 +1,53 @@
+Method 1:
+public int longestConsecutive(int[] num) {
+    // write you code here
+    if(num.length == 0) return 0;
+    
+     Arrays.sort(num);
+    
+     int res = 1;
+     int local = 1;
+     for(int i = 1;i < num.length;i++){
+         if(num[i] - num[i - 1] == 1){
+             local++;
+         }else if(num[i] - num[i - 1] > 1){
+             res = Math.max(local,res);
+             local = 1;
+         }
+     }
+     res = Math.max(local,res);
+     return res;
+  }
+
+Method 2:
+public int longestConsecutive(int[] num) {
+    // write you code here
+    if(num.length == 0) return 0;
+    
+    Set<Integer> set = new HashSet<Integer>();
+    for(int i : num){
+        set.add(i);
+    }
+    
+    int res = 0;
+    for(int i : num){
+        int left = i - 1;
+        int right = i + 1;
+        int count = 1;
+        
+        while(set.contains(left)){
+            count++;
+            set.remove(left);
+            left--;
+        }
+        
+        while(set.contains(right)){
+            count++;
+            set.remove(right);
+            right++;
+        }
+        res = Math.max(count,res);
+        // set.remove(i);
+    }
+    return res;
+}
