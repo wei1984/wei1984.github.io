@@ -1,0 +1,21 @@
+   public ArrayList<ArrayList<Integer>> kSumII(int A[], int k, int target) {
+        // write your code here
+        ArrayList<ArrayList<Integer>> res = new ArrayList<ArrayList<Integer>>();
+        ArrayList<Integer> path = new ArrayList<Integer>();
+        dfs(A,0,k,0,target,0,res,path);
+        return res;
+    }
+    
+    private void dfs(int A[],int start,int k,int count,int target,int sum,ArrayList<ArrayList<Integer>> res,ArrayList<Integer> path){
+        if(count == k && sum == target){
+            res.add(new ArrayList<Integer>(path));
+        }else{
+            for(int i = start;i < A.length;i++){
+                if(sum + A[i] <= target){
+                    path.add(A[i]);
+                    dfs(A,i + 1,k,count + 1,target,sum + A[i],res,path);
+                    path.remove(path.size() - 1);
+                }
+            }
+        }
+    }
