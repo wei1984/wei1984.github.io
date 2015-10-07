@@ -1,0 +1,10 @@
+  public boolean hasRoute(ArrayList<DirectedGraphNode> graph, 
+                            DirectedGraphNode s, DirectedGraphNode t) {
+    // write your code here
+    if(s == t) return true;
+    for(DirectedGraphNode node : s.neighbors){
+        if(node.label == t.label) return true;
+        if(hasRoute(graph,node,t)) return true;
+    }
+    return false;
+  }
