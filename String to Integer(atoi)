@@ -1,0 +1,26 @@
+      public int atoi(String str) {
+        // write your code here
+        String s = str.trim();
+        if(s.length() == 0) return 0;
+        if(s.length() > 11) s = s.substring(0,11);
+        
+        long res = 0;
+        int i = 0;
+        char sign = s.charAt(0);
+        if(sign == '-' || sign == '+'){
+            i++;
+        }
+        
+        while(s.length() > i && s.charAt(i) >= '0' && s.charAt(i) <= '9'){
+            res = res * 10 + (s.charAt(i) - '0');
+            i++;
+        }
+        
+        if(sign == '-') res = -res;
+        if(res < Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }else if(res > Integer.MAX_VALUE){
+            return Integer.MAX_VALUE;
+        }
+        return (int)res;
+    }
