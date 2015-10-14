@@ -1,0 +1,30 @@
+      public ArrayList<DirectedGraphNode> topSort(ArrayList<DirectedGraphNode> graph) {
+        // write your code here
+        ArrayList<DirectedGraphNode> res = new ArrayList<DirectedGraphNode>();
+        Map<DirectedGraphNode,Integer> map = new HashMap<DirectedGraphNode,Integer>();
+        for(DirectedGraphNode node : graph){
+            for(DirectedGraphNode neighbor : node.neighbors){
+        int n = map.containsKey(neighbor) ? map.get(neighbor) : 0;
+        map.put(neighbor,n + 1);
+            }
+        }
+        
+        Queue<DirectedGraphNode> queue = new LinkedList<DirectedGraphNode>();
+        for(DirectedGraphNode node : graph){
+            if(!map.containsKey(node)){
+                queue.offer(node);
+            }
+        }
+        
+        while(queue.size() > 0){
+            DirectedGraphNode node = queue.poll();
+            for(DirectedGraphNode neighbor : node.neighbors){
+                map.put(neighbor,map.get(neighbor) - 1);
+                if(map.get(neighbor) == 0){
+                    queue.offer(neighbor);
+                }
+            }
+            res.add(node);
+        }
+        return res;
+    }
