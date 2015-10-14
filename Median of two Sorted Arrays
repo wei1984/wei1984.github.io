@@ -38,3 +38,35 @@
         }
         return res;
     }
+    
+    
+    public double findMedianSortedArrays(int[] A, int[] B) {
+        int k = A.length + B.length;
+        if(k % 2 == 1){
+            return findMedianSortedArrays(A,B,0,0,k/2 + 1);
+        }else{
+            return (findMedianSortedArrays(A,B,0,0,k/2 + 1) + findMedianSortedArrays(A,B,0,0,k/2))/2.0;
+        }
+    }
+    
+    private int findMedianSortedArrays(int[] A,int[] B,int i,int j,int k){
+        if(i == A.length){
+            return B[j + k - 1];
+        }
+        
+        if(j == B.length){
+            return A[i + k - 1];
+        }
+        
+        if(k == 1){
+            return Math.min(A[i],B[j]);
+        }
+        
+        int a = i + k/2 - 1 < A.length ? A[i + k/2 - 1] : Integer.MAX_VALUE;
+        int b = j + k/2 - 1 < B.length ? B[j + k/2 - 1] : Integer.MAX_VALUE;
+        if(a < b){
+            return findMedianSortedArrays(A,B,i + k/2,j,k - k/2);
+        }else{
+            return findMedianSortedArrays(A,B,i,j + k/2,k - k/2);
+        }
+    }
