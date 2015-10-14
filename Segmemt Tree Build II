@@ -1,0 +1,25 @@
+    public SegmentTreeNode build(int[] A) {
+        // write your code here
+        if(A.length == 0) return null;
+        
+        return build(A,0,A.length - 1);
+    }
+    
+    private SegmentTreeNode build(int[] A,int l,int r){
+        int m = findMax(A,l,r);
+        SegmentTreeNode root = new SegmentTreeNode(l,r,m);
+        if(l < r) {
+            int mid = l + (r - l)/2;
+            root.left = build(A,l,mid);
+            root.right = build(A,mid + 1,r);
+        }
+        return root;
+    }
+    
+    private int findMax(int[] A,int l,int r){
+        int max = Integer.MIN_VALUE;
+        for(int i = l;i <= r;i++){
+            max = Math.max(max,A[i]);
+        }
+        return max;
+    }
