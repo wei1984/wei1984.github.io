@@ -1,0 +1,25 @@
+public TreeNode lowestCommonAncestor(TreeNode root, TreeNode A, TreeNode B) {
+        // write your code here
+        // if(root.val == A.val || root.val == B.val) return root;
+        
+        // int a = Math.min(A.val,B.val);
+        // int b = Math.max(A.val,B.val);
+        // if(root.val < b && root.val > a){
+        //     return root; 
+        // } else if(root.val > a && root.val > b){
+        //     return lowestCommonAncestor(root.left,A,B);
+        // } else{
+        //     return lowestCommonAncestor(root.right,A,B);
+        // }  
+        return findPath(root,A.val,B.val);
+    }
+    
+    private TreeNode findPath(TreeNode root, int a,int b){
+        if(root == null) return null;
+        if(root.val == a || root.val == b) return root;
+        
+        TreeNode ta = findPath(root.left,a,b);
+        TreeNode tb = findPath(root.right,a,b);
+        if(ta != null && tb != null) return root;
+        return ta != null ? ta : tb;
+    }
