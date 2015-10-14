@@ -1,0 +1,27 @@
+    public void heapify(int[] A) {
+        // write your code here
+        for(int i = A.length / 2;i >= 0;i--){
+            heapify(A,i);
+        }
+    }
+    
+    private void heapify(int[] A,int i){
+        int l = 2 * i + 1;
+        int r = l + 1;
+        int min = i;
+        
+        if(l < A.length && A[l] < A[i]){
+            min = l;   
+        }
+        
+        if(r < A.length && A[r] < A[min]){
+            min = r;
+        }
+        
+        if(min != i){
+            int tmp = A[i];
+            A[i] = A[min];
+            A[min] = tmp;
+            heapify(A,min);
+        }
+    }
