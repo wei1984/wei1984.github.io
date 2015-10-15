@@ -1,0 +1,8 @@
+    public int updateBits(int n, int m, int i, int j) {
+        // write your code here
+        long base = ~0;
+        long mask = (base << (j + 1)) | (~(base << i));
+        n = (int)(n & mask);
+        n = (int)(n | (m << i));
+        return n;
+    }
