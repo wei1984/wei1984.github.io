@@ -1,0 +1,21 @@
+      public String DeleteDigits(String A, int k) {
+        // write your code here
+        if(A.length() == 0 || A.length() <= k) return "";
+        if(k == 0){
+            for(int i = 0;i < A.length();i++){
+                if(A.charAt(i) != '0'){
+                    return A.substring(i,A.length());
+                }
+            }
+           return "0"; 
+        } 
+        
+        int index = A.length() - 1;
+        for(int i = index - 1;i >= 0;i--){
+            char a = A.charAt(i + 1);
+            char b = A.charAt(i);
+            if(a < b) index = i;
+        }
+        A = A.substring(0,index) + A.substring(index + 1,A.length());
+        return DeleteDigits(A,k - 1);
+    }
