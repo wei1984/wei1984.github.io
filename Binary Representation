@@ -1,0 +1,39 @@
+      public String binaryRepresentation(String n) {
+        // write your code here
+        if(n.length() == 0 || "0".equals(n)) return "0";
+        String[] parts = n.split("\\.");
+        
+        //Integer part
+        String ib = "";
+        long i = Long.parseLong(parts[0]);
+        if(i == 0){
+            ib = "0";
+        }else{
+            while(i > 0){
+                ib = (i & 1) + ib;
+                i = i >> 1;
+            }
+        }
+        
+        //Decimal part
+        Set<Double> set = new HashSet<Double>();
+        String db = "";
+        if(n.indexOf(".") >= 0){
+            double d = Double.parseDouble("0." + parts[1]);
+            while(d > 0){
+                if(db.length() > 32 || set.contains(d)) {
+                    return "ERROR";
+                }else{
+                    set.add(d);
+                }
+                db += d * 2 >= 1 ? 1 : 0;
+                d = d * 2 >= 1 ? d * 2 - 1 : d * 2;
+            }
+        }
+        
+        if("".equals(db)){
+            return ib;
+        }else{
+            return ib + "." + db;
+        }
+    }
