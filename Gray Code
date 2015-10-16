@@ -1,0 +1,18 @@
+    public ArrayList<Integer> grayCode(int n) {
+        // Write your code here
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        dfs(n,res);
+        return res;
+    }
+    
+    private void dfs(int n,ArrayList<Integer> res){
+        if(n == 0){
+            res.add(0);
+            return;
+        }
+        dfs(n - 1,res);
+        int val = 1 << (n - 1);
+        for(int i = res.size() - 1;i >= 0;i--){
+            res.add(val + res.get(i));
+        }
+    }
