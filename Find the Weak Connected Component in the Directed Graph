@@ -1,0 +1,39 @@
+public List<List<Integer>> connectedSet2(ArrayList<DirectedGraphNode> nodes)
+    {
+        // Write your code here
+        List<List<Integer>> res = new ArrayList<List<Integer>>();
+        Map<Integer,Integer> map = new HashMap<Integer,Integer>();
+        Map<Integer,List<Integer>> mlist = new HashMap<Integer,List<Integer>>();
+        for(DirectedGraphNode node : nodes){
+            for(DirectedGraphNode neighbor : node.neighbors){
+                int k = find(map,node.label);
+                int v = find(map,neighbor.label);
+                map.put(k,v);
+            }
+        }
+        
+        for(DirectedGraphNode node : nodes){
+            int v = find(map,node.label);
+            if(!mlist.containsKey(v)){
+                mlist.put(v,new ArrayList<Integer>());
+            }
+            mlist.get(v).add(node.label);
+        }
+        
+        for(Map.Entry<Integer,List<Integer>> en : mlist.entrySet()){
+            res.add(en.getValue());
+        }
+        
+        return res;
+    }
+    
+    private int find(Map<Integer,Integer> map,int v){
+        if(!map.containsKey(v)){
+            map.put(v,v);
+            return v;
+        }
+        while(map.get(v) != v){
+            v = map.get(v);
+        }
+        return v;
+    }
