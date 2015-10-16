@@ -1,0 +1,30 @@
+public List<Integer> numbersByRecursion(int n) {
+        // write your code here
+        List<Integer> res = new ArrayList<Integer>();
+        return numbersByRecursion(res,res,n,0,1);
+    }
+    
+    private List<Integer> numbersByRecursion(List<Integer> res,List<Integer> li,int n,int i,int base){
+        if(i == n) return res;
+        if(i == 0){
+            res.add(1);
+            res.add(2);
+            res.add(3);
+            res.add(4);
+            res.add(5);
+            res.add(6);
+            res.add(7);
+            res.add(8);
+            res.add(9);
+            return numbersByRecursion(res,res,n,i + 1,base*10);
+        }
+        
+        List<Integer> tmp = new ArrayList<Integer>(res);
+        for(int j : li){
+            tmp.add(j * base);
+            for(int h : res){
+                tmp.add(j * base + h);
+            }
+        }
+        return numbersByRecursion(tmp,li,n,i + 1,base*10);
+    }
