@@ -1,0 +1,23 @@
+      public int divide(int dividend, int divisor) {
+        // Write your code here
+        if(divisor == 0 || (divisor==-1 && dividend == Integer.MIN_VALUE))
+            return Integer.MAX_VALUE;
+        
+        long div = Math.abs((long)dividend);
+        long dis = Math.abs((long)divisor);
+        
+        int c = 0;
+        while(div >= dis){
+            int shift = 0;
+            while(div >= (dis << shift)){
+                shift++;
+            }
+            c += 1 << (shift - 1);
+            div -= dis << (shift - 1);
+        }
+        
+        if((dividend > 0 && divisor < 0) || (dividend < 0 && divisor > 0)){
+            return -c;
+        }
+        return c;
+    }
