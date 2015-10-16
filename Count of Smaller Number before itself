@@ -1,0 +1,63 @@
+    public ArrayList<Integer> countOfSmallerNumberII(int[] A) {
+        // write your code here
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        if(A.length == 0) return res;
+        SegmentTreeNode root = build(A,0,10000);
+        for(int i : A){
+            if(i <= 0) {
+                res.add(0);
+            }else{
+                res.add(query(root,0,i - 1));
+            }
+            modify(root,i);
+        }
+        return res;
+    }
+    
+    private int query(SegmentTreeNode root,int start,int end){
+        if(root.start == start && root.end == end){
+            return root.count;
+        }
+        
+        int mid = root.start + (root.end - root.start) / 2;
+        if(start > mid){
+            return query(root.right,start,end);
+        }if(end <= mid){
+            return query(root.left,start,end);
+        }else{
+            return query(root.left,start,mid) + query(root.right,mid + 1,end);
+        }
+    }
+    
+    private void modify(SegmentTreeNode root,int index){
+        if(root.start == root.end && root.start == index){
+            root.count++;
+        }else{
+            int mid = root.start + (root.end - root.start) / 2;
+            if(index >= root.start && index <= mid){
+                modify(root.left,index);
+            }else if(index > mid && index <= root.end){
+                modify(root.right,index);
+            }
+            root.count = root.left.count + root.right.count;
+        }
+    }
+    
+    private SegmentTreeNode build(int[] A,int l,int r){
+        SegmentTreeNode root = new SegmentTreeNode(l,r);
+        if(l != r){
+            int mid = l + (r - l)/2;
+            root.left = build(A,l,mid);
+            root.right = build(A,mid + 1,r);
+        }
+        return root;
+    }
+    
+    class SegmentTreeNode {
+         int start,end,count;
+         SegmentTreeNode left,right;
+         SegmentTreeNode(int start,int end){
+             this.start = start;
+             this.end = end;
+         }
+    }
