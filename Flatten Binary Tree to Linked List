@@ -1,0 +1,23 @@
+    public void flatten(TreeNode root) {
+        // write your code here
+        if(root == null) return;
+        
+        flatten1(root);
+    }
+    
+    private TreeNode flatten1(TreeNode root){
+        TreeNode left = null;
+        TreeNode right = null;
+        if(root.right != null){
+            right = flatten1(root.right);
+        }
+        if(root.left != null){
+            left = flatten1(root.left);
+            left.right = root.right;
+            root.right = root.left;
+            root.left = null;
+        }
+        if(right != null) return right;
+        if(left != null) return left;
+        return root;
+    }
