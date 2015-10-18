@@ -1,0 +1,31 @@
+public boolean isPalindrome(ListNode head) {
+        // Write your code here
+        if(head == null) return true;
+        
+        ListNode first = head;
+        ListNode second = head;
+        while(second.next != null && second.next.next != null){
+            first = first.next;
+            second = second.next.next;
+        }
+        
+        ListNode pre = first;
+        ListNode cur = first.next;
+        first.next = null;
+        while(cur != null){
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        
+        while(head != null){
+            if(head.val != pre.val){
+                return false;
+            }
+            head = head.next;
+            pre = pre.next;
+        }
+        
+        return true;
+    }
