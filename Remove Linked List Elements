@@ -1,0 +1,19 @@
+public ListNode removeElements(ListNode head, int val) {
+        // Write your code here
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        
+        ListNode pre = dummy;
+        ListNode cur = head;
+        while(cur != null){
+            ListNode next = cur.next;
+            if(cur.val == val){
+                pre.next = next;
+                cur.next = null;
+            }else{
+                pre = cur;
+            }
+            cur = next;
+        }
+        return dummy.next;
+    }
