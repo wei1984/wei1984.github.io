@@ -1,0 +1,21 @@
+public ListNode swapPairs(ListNode head) {
+        // Write your code here
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        
+        ListNode pre = dummy;
+        while(pre.next != null && pre.next.next != null){
+            pre = reverse(pre,pre.next.next.next);
+        }
+        
+        return dummy.next;
+    }
+    
+    private ListNode reverse(ListNode pre,ListNode next){
+        ListNode first = pre.next;
+        ListNode second = pre.next.next;
+        pre.next = second;
+        first.next = next;
+        second.next = first;
+        return first;
+    }
