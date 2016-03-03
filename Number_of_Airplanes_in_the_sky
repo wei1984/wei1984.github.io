@@ -1,0 +1,58 @@
+Number of Airplanes in the sky
+
+Given a interval list which are flying and landing time of the flight. How many airplanes are on the sky at most.
+Note: if flying and landing happens at the same time. We consider landing should happend at first.
+
+Definition of Interval
+
+public class Interval {
+	
+	int start, end;
+	Interval (int start, int end) {
+	 	this.start = start;
+	 	this.end = end;
+	}
+}
+
+/**
+* @param airplanes : an interval array
+* @return: count of airplanes in the sky
+*/
+public int countOfAirplanes(List<Interval> airplanes) {
+	List<Point> list = new ArrayList<Point>();
+	for(Interval inter : airplanes){
+		list.add(new Point(inter.start,false));
+		list.add(new Point(inter.end,true));
+	}
+
+	Collections.sort(list);
+
+	int res = 0;
+	int local = 0;
+	for(Point p : list){
+		if(p.isLanding) local--;
+		if(!p.isLanding) local++;
+		res = Math.max(local,res);
+	}
+	return res;
+}
+
+class Point implements Comparable<Point> {
+	
+	int value;
+	boolean isLanding;
+
+	Point (int value, boolean isLanding){
+		this.value = value;
+		this.isLanding = isLanding;
+	}
+
+	@Override
+	public int compareTo(Point p){
+		if(p.value < value) return 1;
+		if(p.value > value) return -1;
+		if(isLanding && !p.isLanding) return -1;
+		if(!isLanding && !p.isLanding) return 1;
+		return 0;
+	}
+}
