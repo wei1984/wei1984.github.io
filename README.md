@@ -15,21 +15,22 @@ Go to Swagger UI -> Config Management API
 Sample request -  
 ```
 curl --location --request POST 'https://snap-subrosa-api-east-red.snap.comcast.net/management/vmd' \
-      --header 'Content-Type: application/json' \
-      --data-raw '{
-        "changedBy": "wei",
-        "rotationFrequencyDays": 90,
-        "rotationNeeded": true,
-        "vmdClientId": "voae_rest",
-        "vmdClientSecret": "asrevnet_123",
-        "vmdEndpoint": "https://vdsdwan-red-snap-vip.dse.comcast.net:9183",
-        "vmdName": "vmd-red",
-        "vmdPassword": "vmdPassword",
-        "vmdUsername": "snapapiuser02"
-      }'
+  --header 'Content-Type: application/json' \
+  --data-raw '{
+    "changedBy": "wei",
+    "rotationFrequencyDays": 90,
+    "rotationNeeded": true,
+    "vmdClientId": "voae_rest",
+    "vmdClientSecret": "asrevnet_123",
+    "vmdEndpoint": "https://vdsdwan-red-snap-vip.dse.comcast.net:9183",
+    "vmdName": "vmd-red",
+    "vmdPassword": "vmdPassword",
+    "vmdUsername": "snapapiuser02"
+  }'
 ```
     
 - Create new VMD Account for each user
+
 Sample request -
 ```
 curl --location --request POST 'https://snap-subrosa-api-east-red.snap.comcast.net/management/vmd' \
@@ -42,6 +43,7 @@ curl --location --request POST 'https://snap-subrosa-api-east-red.snap.comcast.n
    }'
 ```
 - Verify if VMD Account creates successfully - "Get all VMD Account" API.
+
 Sample response - 
 ```
 [
@@ -55,6 +57,7 @@ Sample response -
 ]
 ```
 - Go to Swagger UI -> Password Management API, Verify if VMD Account credentials creates successfully - "Get all VMD accounts/passwords" API.
+
 Sample response - 
 ```
 [
@@ -67,21 +70,20 @@ Sample response -
 ]
 ```  
 
-## Config existed VMD data
-For existed VMD and VMD users, DSE team should be responsible to migrate data to Subrosa with following steps:
+## Config existed VMD data (DSE team)
+For existed VMD and VMD users, migrate data to Subrosa with following steps:
 1. Manually create existed VMD user password in cyberArk.
 2. For each VMD, invoke "Create new VMD" API in Subrosa.
 3. For each VMD user, invoke "Create new VMD Account" in Subrosa.
 4. Verify VMD Account with "Get all VMD Account" API.
 5. Verify VMD Account credentials - "Get all VMD accounts/passwords" API
 
-## Config new VMD data
+## Config new VMD data (Operation team)
 For new VMD and VMD users, VMD user password will be auto-generated in Subrosa and stored in cyberArk.
-Operation team should be responsible to add new VMD and VMD users in Subrosa with following steps:
+Add new VMD and VMD users in Subrosa with following steps:
 1. For each VMD, invoke "Create new VMD" API in Subrosa.
 2. For each VMD user, invoke "Create new VMD Account" in Subrosa.
 3. Verify VMD Account with "Get all VMD Account" API.
 4. Verify VMD Account credentials - "Get all VMD accounts/passwords" API
-                                                                                    
-                                                                             
+                                                    
  
