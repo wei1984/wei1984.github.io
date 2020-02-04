@@ -4,8 +4,9 @@ Userful resources:
 
 System Design [https://github.com/checkcheckzz/system-design-interview](https://github.com/checkcheckzz/system-design-interview)
 
+
 # How to config VMD data  
-VMD info and VMD Accounts data are required to rotate uCPE passwords in SubRosa. 
+VMD and VMD Accounts data are required to rotate uCPE passwords in SubRosa. 
 
 ## Config Management APIs 
 Swagger UI - https://<Subrosa env endpoint>/swagger-ui.html#/Config_Management_API_-_Manage_VMD_and_VMD_Account_data
@@ -43,7 +44,9 @@ curl --location --request POST 'https://snap-subrosa-api-east-red.snap.comcast.n
    }'
 ```
 - Verify if VMD Account creates successfully - "Get all VMD Account" API.
-
+```
+curl -X GET "https://snap-subrosa-api-east-red.snap.comcast.net/management/vmd/accounts" -H "accept: application/json"
+```
 Sample response - 
 ```
 [
@@ -57,7 +60,9 @@ Sample response -
 ]
 ```
 - Go to Swagger UI -> Password Management API, Verify if VMD Account credentials creates successfully - "Get all VMD accounts/passwords" API.
-
+```
+curl -X GET "https://snap-subrosa-api-east-red.snap.comcast.net/passwd/vmd/vmd-red/accounts" -H "accept: application/json"
+```
 Sample response - 
 ```
 [
@@ -85,5 +90,5 @@ Add new VMD and VMD users in Subrosa with following steps:
 2. For each VMD user, invoke "Create new VMD Account" in Subrosa.
 3. Verify VMD Account with "Get all VMD Account" API.
 4. Verify VMD Account credentials - "Get all VMD accounts/passwords" API
-                                                    
+                                                
  
