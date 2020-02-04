@@ -4,7 +4,6 @@ Userful resources:
 
 System Design [https://github.com/checkcheckzz/system-design-interview](https://github.com/checkcheckzz/system-design-interview)
 
-
 # How to config VMD data  
 VMD info and VMD Accounts data are required to rotate uCPE passwords in SubRosa. 
 
@@ -14,7 +13,8 @@ Swagger UI - https://<Subrosa env endpoint>/swagger-ui.html#/Config_Management_A
 Go to Swagger UI -> Config Management API
 - Create new VMD  
 Sample request -  
-```curl --location --request POST 'https://snap-subrosa-api-east-red.snap.comcast.net/management/vmd' \
+```
+curl --location --request POST 'https://snap-subrosa-api-east-red.snap.comcast.net/management/vmd' \
       --header 'Content-Type: application/json' \
       --data-raw '{
         "changedBy": "wei",
@@ -26,18 +26,21 @@ Sample request -
         "vmdName": "vmd-red",
         "vmdPassword": "vmdPassword",
         "vmdUsername": "snapapiuser02"
-      }'```
+      }'
+```
     
 - Create new VMD Account for each user
 Sample request -
-```curl --location --request POST 'https://snap-subrosa-api-east-red.snap.comcast.net/management/vmd' \
+```
+curl --location --request POST 'https://snap-subrosa-api-east-red.snap.comcast.net/management/vmd' \
    --header 'Content-Type: application/json' \
    --data-raw '{
      "vmdName": "vmd-red",
      "accountName": "admin",
      "accountRole": "admin",
      "accountLoginType": "shell"
-   }'```
+   }'
+```
 - Verify if VMD Account creates successfully - "Get all VMD Account" API.
 Sample response - 
 ```
@@ -80,4 +83,5 @@ Operation team should be responsible to add new VMD and VMD users in Subrosa wit
 3. Verify VMD Account with "Get all VMD Account" API.
 4. Verify VMD Account credentials - "Get all VMD accounts/passwords" API
                                                                                     
+                                                                             
  
